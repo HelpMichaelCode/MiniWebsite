@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <title>PC Store</title>
+        <link rel="icon" href="logo.png" typw="image/png">
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <h2 id = "source">Products</h2>
+
+        <div id="products">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>cat id</th>
+                        <th>name</th>
+                        <th>description</th>
+                        <th>stock</th>
+                        <th>price</th>
+
+                    </tr>
+                </thead>
+                <tbody id = "productRows">
+                    <!-- This is where all the products from the database is going to be inserted in-->
+                </tbody>
+            </table>
+            <hr />
+            <form class="form-inline">
+                    <label>Add a new product</label>
+                <div class="form-group">
+                  <input class="form-control" id="catId" type="number" />
+                  <input class="form-control" id="name" type="text" />
+                  <input class="form-control" id="description" type="text" />
+                  <input class="form-control" id="stock" type="number" />
+                  <input class="form-control" id="price" type="number" />
+                  
+                </div>
+                <button type="button" id="btnAdd" class="btn btn-primary">
+                  Add New Product
+                </button>
+              </form>
+        </div>
+        <script src="script.js"></script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </body>
+</html>

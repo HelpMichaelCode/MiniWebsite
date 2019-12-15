@@ -1,0 +1,49 @@
+create user webUser with password = 'Password@12345';
+
+select * from AppUser;
+select * from dbo.Product;
+-- GO
+-- SET IDENTITY_INSERT [dbo].[AppUser] ON 
+-- GO
+-- INSERT [dbo].[AppUser] ([UserId], [FirstName], [LastName], [Email], [Password], [Role]) VALUES (2, N'Lenny', N'Clark', N'lennyclark@web.com', N'password', N'user')
+
+
+-- UPDATE dbo.Category SET CategoryDescription = 'A type of computer memory that can be accessed randomly' WHERE CategoryId = 1; 
+-- UPDATE dbo.Category SET CategoryDescription = 'A panel of keys that operate a computer' WHERE CategoryId = 2; 
+-- UPDATE dbo.Category SET CategoryDescription = 'A computer mouse is a handheld hardware input device that controls a cursor in a GUI and can move and select text, icons, files, and folders on your computer' WHERE CategoryId = 3; 
+-- UPDATE dbo.Category SET CategoryDescription = 'A display screen for content' WHERE CategoryId = 4; 
+-- UPDATE dbo.Category SET CategoryDescription = 'A device that converts analog audio signals into the equivalent air vibrations in order to make audible sounds' WHERE CategoryId = 5; 
+-- UPDATE dbo.Category SET CategoryDescription = 'A portable computer that is suitable for use while travelling' WHERE CategoryId = 6;
+-- UPDATE dbo.Category SET CategoryDescription = 'A printed circuit board containing the principal components of a computer or other device, with connectors for other circuit boards to be slotted into' WHERE CategoryId = 7; 
+
+-- select * from dbo.Category;
+
+-- Category 1 : RAM, Category 2: Keyboards, Category 3: Mouses, Category 4: Monitors, Category 5: Speakers, Category 6: Laptops, Category 7: Motherboards
+GO
+SET IDENTITY_INSERT [dbo].[Product] ON 
+GO
+INSERT [dbo].[Product] ([ProductId], [CategoryId], [ProductName], [ProductDescription], [ProductStock], [ProductPrice]) 
+VALUES (1, 4, N'Kettle', N'Steel Electric Kettle', 100, CAST(55.00 AS Decimal(10, 2)))
+
+UPDATE dbo.Product SET ProductName = 'Acer Predator Z271UV' , ProductDescription = '27 inch with a resolution of 2560×1440', ProductStock = 24, ProductPrice = 45.45 WHERE ProductId = 1 AND CategoryId = 4;
+UPDATE dbo.Product SET ProductName = 'Acer Predator XB272' , ProductDescription = '27 inch with a resolution of 1920×1080', ProductStock = 24, ProductPrice = 45.45 WHERE ProductId = 2 AND CategoryId = 4;
+
+UPDATE dbo.Product SET ProductName = 'Code Keyboard' , ProductDescription = 'Mechanical Keyboard', ProductStock = 12, ProductPrice = 78.56 WHERE ProductId = 3 AND CategoryId = 2;
+UPDATE dbo.Product SET ProductName = 'Das Keyboard' , ProductDescription = 'It is a great keyboard for work!', ProductStock = 88, ProductPrice = 24.34 WHERE ProductId = 4 AND CategoryId = 2;
+
+UPDATE dbo.Product SET ProductName = 'Macbook Pro' , ProductDescription = 'It has a touch bar', ProductStock = 2, ProductPrice = 55.54 WHERE ProductId = 5 AND CategoryId = 6;
+
+UPDATE dbo.Product SET ProductName = 'Logic Tech A27' , ProductDescription = 'Silent clicking', ProductStock = 10, ProductPrice = 99.56 WHERE ProductId = 6 AND CategoryId = 3;
+
+UPDATE dbo.Product SET ProductName = 'Macbook Air' , ProductDescription = '256 SSD Storage', ProductStock = 15, ProductPrice = 76.34 WHERE ProductId = 8 AND CategoryId = 6;
+
+UPDATE dbo.Product SET ProductName = 'Solid Ram' , ProductDescription = '10 GB of storage', ProductStock = 34, ProductPrice = 66.56 WHERE ProductId = 9 AND CategoryId = 1;
+UPDATE dbo.Product SET ProductName = 'Cool Ram' , ProductDescription = '5 GB of storage', ProductStock = 36, ProductPrice = 78.45 WHERE ProductId = 10 AND CategoryId = 1;
+
+UPDATE dbo.Product SET ProductName = 'ATX Motherboard' , ProductDescription = '5 Connectors and 10 slots', ProductStock = 7, ProductPrice = 101.23 WHERE ProductId = 11 AND CategoryId = 7;
+
+UPDATE dbo.Product SET ProductName = 'Cherry' , ProductDescription = ' German computer peripheral-device maker', ProductStock = 808, ProductPrice = 76.56 WHERE ProductId = 12 AND CategoryId = 2;
+
+UPDATE dbo.Product SET ProductName = 'LPX Motherboard' , ProductDescription = 'The low profile extension motherboards, better known as LPX motherboards, were created after the AT boards in the 90’s', ProductStock = 776, ProductPrice = 134.89 WHERE ProductId = 13 AND CategoryId = 7;
+
+select * from dbo.Product;
