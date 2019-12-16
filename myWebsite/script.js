@@ -51,9 +51,7 @@ const rows = products.map(product => {
                 <td>${product.ProductDescription}</td>
                 <td>${product.ProductStock}</td>
                 <td class="price">&euro;${Number(product.ProductPrice).toFixed(2)}</td>
-                <td><button id="${product.ProductId}" class="btn btn-xs>
-                        <span class="oi oi-trash"></span>
-                    </button>
+                <td><button id="${product.ProductId}"><span class="glyphicon glyphicon-trash"></span></button>
                 </td>
             </tr>`;
 });
@@ -166,9 +164,38 @@ async function deleteProduct(){
     }
 }
 
+// method to retrieve a specific product for the user
+async function searchProduct(){
+    
+    // Retrieve the keyword input from the search bar
+    let productName = document.getElementById("search").value;
+    // Pass that keyword into the url endpoint
+    const url = `${BASE_API_URL}/search/${productName}`;
+
+    // Pass it on then to the request body
+    const request = {
+        method:'GET',
+        headers:HTTP_REQ_HEADERS,
+        mode:'cors'
+    }
+    // Fetch the reponse 
+    const response = await fetch(url, request);
+    // Converts the response in json format
+    const json = await response.json();
+
+    // If the response is 200 ok, go into this if statement
+    if(response.ok){
+        console.log(`${productName} has been found`);
+        // Call the display method and pass in the json variable
+        // And it will display the specific product content for the user
+        displayData(json);
+    } else {
+        console.log(`We could not find ${productName}`);
+    }
+}
 // set up add item button
 document.getElementById("btnAdd").addEventListener("click", addProduct);
+document.getElementById("searchBtn").addEventListener("click",searchProduct);
 
-// for(let i = 0; i < )
 // Call the function
 getDataAsync();

@@ -5,6 +5,9 @@ const cors = require('cors');
 const HOST = '0.0.0.0';
 const PORT = 8080;
 
+// load passport middleware config
+require('./security/passportConfig');
+
 // app is a new instance of express (the web app framework)
 let app = express();
 
@@ -30,11 +33,17 @@ app.use(cors());
 app.options('*', cors()) // include before other routes
 
 /* Configure app Routes to handle requests from browser */
-// The home page 
-
+// The home page
 app.use('/', require('./routes/index'));
 // app.use('/product', require('./myWebsite/script'));
+// route to /product
 app.use('/', require('./routes/product'));
+
+// route to /user
+app.use('/user', require('./routes/user'));
+
+// route to /login
+app.use('/login', require('./routes/login'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

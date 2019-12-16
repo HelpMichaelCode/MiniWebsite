@@ -47,3 +47,10 @@ UPDATE dbo.Product SET ProductName = 'Cherry' , ProductDescription = ' German co
 UPDATE dbo.Product SET ProductName = 'LPX Motherboard' , ProductDescription = 'The low profile extension motherboards, better known as LPX motherboards, were created after the AT boards in the 90’s', ProductStock = 776, ProductPrice = 134.89 WHERE ProductId = 13 AND CategoryId = 7;
 
 select * from dbo.Product;
+
+-- Insert a user
+GO
+SET IDENTITY_INSERT [dbo].[AppUser] ON 
+GO
+INSERT [dbo].[AppUser] ([UserId], [FirstName], [LastName], [Email], [Password], [Role]) 
+VALUES (1, N'John', N'Doe', N'johndoe@web.com', N'password', N'Admin');

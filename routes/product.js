@@ -30,17 +30,40 @@ but without this option we would have:
 JSON output example [{"year": 2015, "month": 12, "day": 15}]
 */
 const SELECT_ID = 'SELECT * FROM dbo.Product WHERE ProductId = @id for json path, without_array_wrapper;';
-
+// What is scope_identity
 const INSERT = 'INSERT INTO dbo.Product (CategoryId, ProductName, ProductDescription, ProductStock, ProductPrice) VALUES (@categoryId, @productName, @productDescription, @ProductStock, @ProductPrice); SELECT * from dbo.Product WHERE ProductId = SCOPE_IDENTITY();'
 
 const UPDATE = 'UPDATE dbo.Product SET CategoryId = @categoryId, ProductName = @productName, ProductDescription = @productDescription, ProductStock = @ProductStock, ProductPrice = @ProductPrice WHERE ProductId = @id; SELECT * FROM dbo.Product WHERE ProductId = @id;';
 
 const DELETE = 'DELETE FROM dbo.Product WHERE ProductId = @id;';
 
-
+// here is th search statement
+const SEARCH_ID = "SELECT * from dbo.Product WHERE ProductName LIKE CONCAT ('%', @key, '%') for json path;";
 // First HTTP method that were gonna do is the get method.
 // Whenever a client requests to see all the products, this
 // method will execute
+
+// This get method returns a specific product page
+// which depends on what keyword the user inputs into the search bar 
+
+router.get('/product/search/:key', async(req, res) =>{
+    
+    const key = req.params.key;
+    // "%' + req..... + '%"'
+    console.log('Value of key: ' + key);
+    try{
+        const pool = await dbConnPoolPromise
+        const result = await pool.request()
+                .input('key', sql.NVarChar, key)
+                .query(SEARCH_ID);
+                console.log('Result:' + result[0]);
+                res.json(result.recordset[0]); 
+
+} catch(err){
+    res.status(500);
+    res.send(err.message);
+}});
+
 router.get('/product', async(req, res) => {
     // Let's get a database connection first
 
