@@ -1,24 +1,29 @@
 // require imports packages required by the application
 const express = require('express');
+const cors = require('cors')
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cookieParser = require('cookie-parser')
+
 const HOST = '0.0.0.0';
 const PORT = 8080;
 
-// load passport middleware config
+// load passport miidleware Config
 require('./security/passportConfig');
 
 // app is a new instance of express (the web app framework)
 let app = express();
 
+app.use(express.static('website'));
 // Application settings
 app.use((req, res, next) => {
     // Globally set Content-Type header for the application
     res.setHeader("Content-Type", "application/json");
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   
     next();
 }); 
+
+// Cookie support
+app.use(cookieParser());
 
 // Allow app to support differnt body content types (using the bidyParser package)
 app.use(bodyParser.text());
@@ -29,21 +34,29 @@ app.use(bodyParser.urlencoded({ extended: true })); // support url encoded bodie
 // https://www.npmjs.com/package/cors
 // https://codesquery.com/enable-cors-nodejs-express-app/
 // Simple Usage (Enable All CORS Requests)
-app.use(cors());
+app.use(cors({ credentials: true, origin: true }));
 app.options('*', cors()) // include before other routes
 
 /* Configure app Routes to handle requests from browser */
-// The home page
+// The home page 
 app.use('/', require('./routes/index'));
-// app.use('/product', require('./myWebsite/script'));
+
 // route to /product
-app.use('/', require('./routes/product'));
+app.use('/category', require('./routes/category'));
+
+// route to /product
+app.use('/product', require('./routes/product'));
 
 // route to /user
 app.use('/user', require('./routes/user'));
 
 // route to /login
 app.use('/login', require('./routes/login'));
+
+
+// protected by jwt strategy as a middleware - only verified users can access this route
+//app.use('/user', passport.authenticate('jwt', { session : false }), require('./routes/user') );
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -53,8 +66,7 @@ app.use(function (req, res, next) {
 });
 
 // Start the HTTP server using HOST address and PORT consts defined above
-
-// Listen for incoming connections whenever a client sends a request
+// Lssten for incoming connections
 var server = app.listen(PORT, HOST, function() {
     console.log(`Express server listening on http://${HOST}:${PORT}`);
 });
