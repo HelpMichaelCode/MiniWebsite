@@ -152,12 +152,15 @@ async function login() {
     console.log("response: " + json.user);
 
     // A successful login will return a user
-    if (json.user != false) {
+    if (json.user.includes("@")) {
       // If a user then record in session storage
       sessionStorage.loggedIn = true;
-      
+      sessionStorage.role = json.role;
       // force reload of page
       location.reload(true);
+    } else {
+      alert("Incorrect credentials");
+      sessionStorage.loggedIn = false;
     }
 
     // catch and log any errors
@@ -181,7 +184,7 @@ async function logout() {
 
     // forget user in session storage
     sessionStorage.loggedIn = false;
-
+    sessionStorage.role = "";
     // force reload of page
     location.reload(true);
 
@@ -227,13 +230,13 @@ function displayProducts(products) {
                 <td class="price">&euro;${Number(product.ProductPrice).toFixed(2)}</td>`
       
         // If user logged in then show edit and delete buttons
-        // To add - check user role 
+        
 
-        if (userLoggedIn() === true) {      
+        if (userLoggedIn() === true && sessionStorage.role === "Admin") {      
           rowProduct+= `<td><button class="btn btn-xs" data-toggle="modal" data-target="#ProductFormDialog" onclick="updateID(${product.ProductId}, ${product.CategoryId}, '${product.ProductName}', '${product.ProductDescription}', ${product.ProductStock}, ${product.ProductPrice});"><span class="oi oi-pencil"></span></button></td>
                    <td><button class="btn btn-xs" onclick="deleteProduct(${product.ProductId})"><span class="oi oi-trash"></span></button></td>`
         }
-        console.log("Product: " + product.ProductName);
+       
         rowProduct+= '</tr>';
 
        return rowProduct;

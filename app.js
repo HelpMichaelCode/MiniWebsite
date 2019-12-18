@@ -14,6 +14,7 @@ require('./security/passportConfig');
 let app = express();
 
 app.use(express.static('website'));
+
 // Application settings
 app.use((req, res, next) => {
     // Globally set Content-Type header for the application
@@ -39,7 +40,6 @@ app.options('*', cors()) // include before other routes
 
 /* Configure app Routes to handle requests from browser */
 // The home page 
-app.use('/', require('./routes/index'));
 
 // route to /product
 app.use('/category', require('./routes/category'));

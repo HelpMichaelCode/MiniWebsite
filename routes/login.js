@@ -62,7 +62,7 @@ router.post('/auth', (req, res) => {
 
         // add the jwt to the cookie and send
         res.cookie('jwt', token, { httpOnly: true, secure: false });
-        res.status(200).send({ "user": user.Email, token });
+        res.status(200).send({ "user": user.Email, token, "role": user.Role});
       });
     },
   )(req, res);

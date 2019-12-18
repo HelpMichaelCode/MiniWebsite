@@ -14,7 +14,9 @@ body {
     margin: 0;
     color: #444;
   }
-  
+  h2{
+    text-align: center;
+  }
   h1 {
     font-family: "Merriweather", serif;
     font-size: 32px;
