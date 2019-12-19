@@ -19,8 +19,7 @@ const SQL_SELECT_BY_ID = 'SELECT * FROM dbo.Category WHERE CategoryId = @id for 
 
 
 // GET listing of all categories
-// Address http://server:port/category
-// returns JSON
+
 router.get('/', async (req, res) => {
 
     // Get a DB connection and execute SQL

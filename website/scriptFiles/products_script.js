@@ -13,10 +13,11 @@ const GET_INIT = { method: 'GET', credentials: 'include', headers: HTTP_REQ_HEAD
 // Requests will use the GET method and permit cross origin requests
 const DELETE_INIT = { method: 'DELETE', credentials: 'include', headers: HTTP_REQ_HEADERS, mode: 'cors' };
 
-// Proct API URL
+// Main URL
 const BASE_URL = `http://localhost:8080/`;
 
- // Delete
+ // Delete method to delete a product, which is executed whenever, the user clicks the delete icon.
+ // The product id is passed as well.
  async function deleteDataAsync(url) {
 
   // Try catch 
@@ -74,8 +75,9 @@ async function getDataAsync(url) {
 async function postOrPutDataAsync(url, reqBody, reqMethod) {
 
   // create request object
+  // request body
   const request = {
-      method: reqMethod,
+      method: reqMethod, 
       headers: HTTP_REQ_HEADERS,
       credentials: 'include', // important
       mode: 'cors',
@@ -105,6 +107,7 @@ async function postOrPutDataAsync(url, reqBody, reqMethod) {
   }
 
 }
+
 // Fetch.js
 
 // --------------------------------- //
@@ -116,6 +119,7 @@ function showLoginLink() {
   const link = document.getElementById('loginLink')
 
   // Read session storage value (set during login) and set link
+  // If the sessions storage
   if (userLoggedIn() === true) {
     link.innerHTML = 'Logout';
     link.removeAttribute('data-toggle');
@@ -131,6 +135,10 @@ function showLoginLink() {
 
 }
 
+// Register is passed into the button element tag as a onclick event.
+// Whenever the register button is clicked, it fires off this method
+// it reads all the values passed into each box field, and passed inside
+// the request body.
 async function register(){
   const url = `${BASE_URL}login/register`
 
@@ -158,12 +166,13 @@ async function register(){
   
 }
 // Login a user
+// Same again, login() function passed into the onclick event
 async function login() {
 
   // Login url
   const url = `${BASE_URL}login/auth`
 
-  // Get form fields
+  // Get the values form the form fields
   const email = document.getElementById('email').value;
   const pwd = document.getElementById('password').value;
   // build request body
@@ -178,6 +187,9 @@ async function login() {
     console.log("response: " + json.user);
 
     // A successful login will return a user
+    // Probably not the best way to validate user log in email but
+    // it's simple. But the password has to be the same in the database.
+  
     if (json.user.includes("@")) {
       // If a user then record in session storage
       sessionStorage.loggedIn = true;
@@ -273,13 +285,6 @@ function displayProducts(products) {
   rows+= `<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ProductFormDialog" id="AddProductButton">Add Product</button>`
   }
   productTable.innerHTML = rows;
-
-  // let delButtons = productTable.getElementsByTagName("button");
-  
-  // for (let i = 0; i < delButtons.length; i++){
-  //     delButtons[i].addEventListener("click", deleteProduct);
-  // }
- 
 } 
 
 // load and display categories
@@ -293,7 +298,8 @@ function displayCategories(categories) {
   items.unshift(`<a href="#" class="list-group-item list-group-item-action" onclick="loadProducts()">Show all</a>`);
 
   // Set the innerHTML of the productRows root element = rows
-  // Why use join('') ???
+  // Why use join('') ??? 
+  // We are using join to join the elements of an array intoa string
   document.getElementById('categoryList').innerHTML = items.join('');
 } // end function
 
@@ -324,26 +330,7 @@ async function updateProducts(id) {
   }
 }
 
-
-// When a product is selected for update / editing, get it by id and fill out the form
-async function prepareProductUpdate(id){
-  try{
-    const product = await getDataAsync(`${BASE_URL}product/${id}`);
-
-    // Fill out thr form
-    document.getElementById('productId').value = product.ProductId;
-    document.getElementById('categoryId').value = product.CategoryId;
-    document.getElementById('productName').value = product.ProductName;
-    document.getElementById('productDescription').value = product.ProductDescription;
-    document.getElementById('productStock').value = product.ProductStock;
-    document.getElementById('productPrice').value = product.ProductPrice;
-    
-  }
-  catch(err){
-    console.log(err);
-  }
-}
-
+// Update a specific product
 function updateID(id, catId, prodName, prodDescription, prodStock, proPrice){
   document.getElementById('productId').value = id;
   document.getElementById('categoryId').value = catId;
@@ -393,6 +380,7 @@ async function addOrUpdateProduct(){
     return err;
   }
 }
+
 
 async function searchProduct(){
     

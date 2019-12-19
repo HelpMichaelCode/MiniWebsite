@@ -20,7 +20,6 @@ const config = require('config');
 const keys = config.get('keys');
 
 // Function to get user
-// Consider putting this in a seperate user service
 const getUser = async (username) => {
 
   try {
@@ -49,8 +48,13 @@ passport.use(new LocalStrategy({
 },async (username, password, done) => {
   try {
     const user = await getUser(username);
-    // this example uses plain text but better to use hashed passwords - 
+    
+    // Below is to compare if the hash value of the password entered in is the same in the database.
+    // In the database, all the passwords are hashed, so if the user enters in password12 (which has a different hash value)
+    // it will not be recognized
+
     const passwordsMatch = await bcrypt.compare(password, user.Password);
+    // If it returns true print out messgae
     if (passwordsMatch) {
       return done(null, user, { message: 'Logged In Successfully' });
     } else {

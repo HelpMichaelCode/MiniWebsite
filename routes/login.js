@@ -22,11 +22,12 @@ const { sql, dbConnPoolPromise } = require('../database/db.js');
 
 const SQL_INSERT = "INSERT INTO dbo.AppUser (FirstName, LastName, Email, Password, Role) VALUES (@firstName, @lastName, @email, @password, 'User'); SELECT * from dbo.AppUser WHERE UserId = SCOPE_IDENTITY();";
 
+
 const hashCost = 10;
 
 
 // POST login.
-// Send username and password via request body from a login form, etc.
+// Send username and password via request body from a login form
 
 router.post('/auth', (req, res) => {
   // use passport to athenticate - uses local middleware
@@ -41,12 +42,12 @@ router.post('/auth', (req, res) => {
           user: user
         });
       }
-
+    
       const payload = {
         username: user.Email,
         // process.env.JWT_EXPIRATION_MS, 10
         // Set expiry to 30 minutes
-        expires: Date.now() + (2000 * 60 * 30),
+        expires: Date.now() + (1000 * 60 * 30),
       };
 
       //assigns payload to req.user

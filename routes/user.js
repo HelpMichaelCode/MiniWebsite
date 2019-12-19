@@ -27,8 +27,6 @@ const SQL_SELECT_BY_ID = 'SELECT * FROM dbo.AppUser WHERE UserId = @id for json 
 
 
 // GET listing of all users
-// Address http://server:port/user
-// returns JSON
 // Protected by Passport jwt check
 // This will call the jwt middleware defined in passportConfig.js
 router.get('/', passport.authenticate('jwt', { session: false}),
@@ -86,15 +84,7 @@ async (req, res) => {
   }
 });
 
-/*
-router.get('/test/test',
-passport.authenticate('jwt', { session: false}),
-(req, res) => {
-  console.log(`** protected: ${req.user}`);
 
-  res.status(200).send({ "message": req.user});
-});
-*/
 
 
 module.exports = router;

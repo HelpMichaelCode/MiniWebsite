@@ -25,14 +25,18 @@ const SQL_INSERT = 'INSERT INTO dbo.Product (CategoryId, ProductName, ProductDes
 const SQL_UPDATE = 'UPDATE dbo.Product SET CategoryId = @categoryId, ProductName = @productName, ProductDescription = @productDescription, ProductStock = @ProductStock, ProductPrice = @ProductPrice WHERE ProductId = @id; SELECT * FROM dbo.Product WHERE ProductId = @id;';
 const SQL_DELETE = 'DELETE FROM dbo.Product WHERE ProductId = @id;';
 
+// SQL Statement for serach bar
 const SEARCH_BY_NAME = "SELECT * from dbo.Product WHERE ProductName LIKE CONCAT ('%', @key, '%') for json path;";
 
+// Whenever a product name is being passed into the search bar, it will be passed to this endpoint and return back 
+// all the products that the user had entered into the search bar
 router.get('/search/:key', async(req, res) =>{
     
     const key = req.params.key;
     // "%' + req..... + '%"'
     
     try{
+        // Getting connection to the database
         const pool = await dbConnPoolPromise
         const result = await pool.request()
                 .input('key', sql.NVarChar, key)
@@ -44,9 +48,9 @@ router.get('/search/:key', async(req, res) =>{
     res.status(500);
     res.send(err.message);
 }});
+
 // GET listing of all products
-// Address http://server:port/product
-// returns JSON
+
 router.get('/', async (req, res) => {
 
     // Get a DB connection and execute SQL
@@ -68,16 +72,13 @@ router.get('/', async (req, res) => {
 });
 
 // GET a single product by id
-// id passed as parameter via url
-// Address http://server:port/product/:id
-// returns JSON
+
 router.get('/:id', async (req, res) => {
 
     // read value of id parameter from the request url
     const productId = req.params.id;
 
-    // Validate input - important as a bad input could crash the server or lead to an attack
-    // See link to validator npm package (at top) for doc.
+    // Validate input
     // If validation fails return an error message
     if (!validator.isNumeric(productId, { no_symbols: true })) {
         res.json({ "error": "invalid id parameter" });
@@ -105,16 +106,13 @@ router.get('/:id', async (req, res) => {
 });
 
 // GET products by category id
-// id passed as parameter via url
-// Address http://server:port/product/:id
-// returns JSON
+
 router.get('/bycat/:id', async (req, res) => {
 
     // read value of id parameter from the request url
     const categoryId = req.params.id;
 
-    // Validate input - important as a bad input could crash the server or lead to an attack
-    // See link to validator npm package (at top) for doc.
+    // Validate input 
     // If validation fails return an error message
     if (!validator.isNumeric(categoryId, { no_symbols: true })) {
         res.json({ "error": "invalid id parameter" });
