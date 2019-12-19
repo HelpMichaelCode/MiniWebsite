@@ -1,5 +1,6 @@
 body {
     font-family: sans-serif;
+    
   }
   
   /* Fonts from Google Fonts - more at https://fonts.google.com */
@@ -7,12 +8,12 @@ body {
   @import url("https://fonts.googleapis.com/css?family=Merriweather:400,700");
   
   body {
-    background-color: white;
+    background-color: #1B1B1B;
     font-family: "Open Sans", sans-serif;
 
     font-size: 18px;
     margin: 0;
-    color: #444;
+    color: white;
   }
   h2{
     text-align: center;
@@ -26,9 +27,6 @@ body {
     text-align: right;
   }
   
-.averagePrice {
-  color: red;
-  text-align: right;
-}
+
 
   

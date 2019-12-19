@@ -46,7 +46,7 @@ router.post('/auth', (req, res) => {
         username: user.Email,
         // process.env.JWT_EXPIRATION_MS, 10
         // Set expiry to 30 minutes
-        expires: Date.now() + (1000 * 60 * 30),
+        expires: Date.now() + (2000 * 60 * 30),
       };
 
       //assigns payload to req.user
@@ -90,29 +90,28 @@ router.get('/logout', async (req, res) => {
 
 // POST - Insert a new user.
 // This async function sends a HTTP post request
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
   // Validate - this string, inially empty, will store any errors
   let errors = "";
 
-  // Make sure that first name is text
+
   const firstName = req.body.firstName;
   if (firstName === "") {
     errors += "invalid first name; ";
   }
-  // Make sure that last name is text
+  
   const lastName = req.body.lastName;
   if (lastName === "") {
     errors += "invalid last name; ";
   }
-  // validate email
+  
   const email = req.body.email;
-
-  if (!validator.isEmail(email)) {
+  if (email === "") 
+  {
     errors += "invalid email; ";
   }
-  // validate password
+ 
   let password = req.body.password;
-  // use a regukar expression to check for allowed chars in password
   if (password === "") 
   {
     errors += "invalid password; ";

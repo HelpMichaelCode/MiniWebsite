@@ -132,12 +132,12 @@ function showLoginLink() {
 }
 
 async function register(){
-  const url = `${BASE_URL}login`
+  const url = `${BASE_URL}login/register`
 
   const fName = document.getElementById('fName').value;
   const lName = document.getElementById('lName').value;
-  const userEmail = document.getElementById('email').value;
-  const userPassword = document.getElementById('password').value;
+  const userEmail = document.getElementById('Email').value;
+  const userPassword = document.getElementById('Password').value;
 
   const reqBody = JSON.stringify({
     firstName: fName,
@@ -148,8 +148,9 @@ async function register(){
 
   try{
     const json = await postOrPutDataAsync(url, reqBody, 'POST');
-    
-  console.log("Response: " + json);
+    alert(fName + " " + lName + " has been registered!");
+    // console.log(fName + " " + lName + " has been registered!");
+    console.log("Response: " + json);
   } catch (err){
     console.log("ERROR: " + err);
   }
