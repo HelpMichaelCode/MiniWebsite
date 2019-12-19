@@ -126,11 +126,36 @@ function showLoginLink() {
     link.innerHTML = 'Login';
     link.setAttribute('data-toggle', 'modal');
     link.setAttribute('data-target', '#LoginDialog');
-    //link.addEventListener('click', login);
+    // link.addEventListener('click', login);
   }
 
 }
 
+async function register(){
+  const url = `${BASE_URL}login`
+
+  const fName = document.getElementById('fName').value;
+  const lName = document.getElementById('lName').value;
+  const userEmail = document.getElementById('email').value;
+  const userPassword = document.getElementById('password').value;
+
+  const reqBody = JSON.stringify({
+    firstName: fName,
+    lastName: lName,
+    email: userEmail,
+    password: userPassword
+  });
+
+  try{
+    const json = await postOrPutDataAsync(url, reqBody, 'POST');
+    
+  console.log("Response: " + json);
+  } catch (err){
+    console.log("ERROR: " + err);
+  }
+  
+  
+}
 // Login a user
 async function login() {
 
@@ -231,12 +256,12 @@ function displayProducts(products) {
       
         // If user logged in then show edit and delete buttons
         
-
+          
         if (userLoggedIn() === true && sessionStorage.role === "Admin") {      
           rowProduct+= `<td><button class="btn btn-xs" data-toggle="modal" data-target="#ProductFormDialog" onclick="updateID(${product.ProductId}, ${product.CategoryId}, '${product.ProductName}', '${product.ProductDescription}', ${product.ProductStock}, ${product.ProductPrice});"><span class="oi oi-pencil"></span></button></td>
                    <td><button class="btn btn-xs" onclick="deleteProduct(${product.ProductId})"><span class="oi oi-trash"></span></button></td>`
         }
-       
+        
         rowProduct+= '</tr>';
 
        return rowProduct;

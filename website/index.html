@@ -14,7 +14,8 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary static-top">
+        
         <div class="container">
             <a class="navbar-brand" href="#">Online PC Store</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -24,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home
+                        <a class="nav-link" href="index.html">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
@@ -32,10 +33,10 @@
                         <a class="nav-link" href="#">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a id="loginLink" class="nav-link" href="#">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a id="loginLink" class="nav-link" href="#">Login</a>
+                        <a id="registerLink" class="nav-link" href="#" data-toggle="modal" data-target="#RegisterDialog">Register</a>
                     </li>
                 </ul>
             </div>
@@ -113,6 +114,48 @@
             </div>
         </div> <!-- End Login Model -->
         
+
+         <!-- Register Dialog Modal -->
+         <div class="modal fade" id="RegisterDialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Register</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="firstName">First Name:</label>
+                            <input type="firstName" class="form-control" id="fName">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input type="lastName" class="form-control" id="lName">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" class="form-control" id="password">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button onclick="register()" type="button" class="btn btn-primary" data-dismiss="modal">Register</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div> <!-- End Register Model -->
+
         <!-- Product form Dialog Model -->
         <div class="modal fade" id="ProductFormDialog">
             <div class="modal-dialog modal-dialog-centered">

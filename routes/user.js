@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
@@ -53,17 +52,13 @@ async (req, res) => {
   }
 });
 
-// GET a single product by id
-// id passed as parameter via url
-// Address http://server:port/product/:id
-// returns JSON
+
 router.get('/:id', passport.authenticate('jwt', { session: false}),
 async (req, res) => {
 
   // read value of id parameter from the request url
   const userId = req.params.id;
 
-  // Validate input - important as a bad input could crash the server or lead to an attack
   // See link to validator npm package (at top) for doc.
   // If validation fails return an error message
   if (!validator.isNumeric(userId, { no_symbols: true })) {

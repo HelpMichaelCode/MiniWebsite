@@ -22,8 +22,6 @@ const { sql, dbConnPoolPromise } = require('../database/db.js');
 
 const SQL_INSERT = "INSERT INTO dbo.AppUser (FirstName, LastName, Email, Password, Role) VALUES (@firstName, @lastName, @email, @password, 'User'); SELECT * from dbo.AppUser WHERE UserId = SCOPE_IDENTITY();";
 
-// authentication will take approximately 13 seconds
-// https://pthree.org/wp-content/uploads/2016/06/bcrypt.png
 const hashCost = 10;
 
 
@@ -44,7 +42,6 @@ router.post('/auth', (req, res) => {
         });
       }
 
-      // Define the JWT contents - be careful: including email here but is that a good idea?
       const payload = {
         username: user.Email,
         // process.env.JWT_EXPIRATION_MS, 10
@@ -53,6 +50,7 @@ router.post('/auth', (req, res) => {
       };
 
       //assigns payload to req.user
+      
       req.login(payload, { session: false }, (error) => {
         if (error) {
           res.status(400).send({ error });
@@ -63,6 +61,7 @@ router.post('/auth', (req, res) => {
         // add the jwt to the cookie and send
         res.cookie('jwt', token, { httpOnly: true, secure: false });
         res.status(200).send({ "user": user.Email, token, "role": user.Role});
+        
       });
     },
   )(req, res);
@@ -97,23 +96,25 @@ router.post('/', async (req, res) => {
 
   // Make sure that first name is text
   const firstName = req.body.firstName;
-  if (!validator.isAlpha(firstName, ['en-GB', 'en-US'])) {
-    errors += "invalid frst name; ";
+  if (firstName === "") {
+    errors += "invalid first name; ";
   }
   // Make sure that last name is text
   const lastName = req.body.lastName;
-  if (!validator.isAlpha(lastName, ['en-GB', 'en-US'])) {
+  if (lastName === "") {
     errors += "invalid last name; ";
   }
   // validate email
   const email = req.body.email;
+
   if (!validator.isEmail(email)) {
     errors += "invalid email; ";
   }
   // validate password
   let password = req.body.password;
   // use a regukar expression to check for allowed chars in password
-  if (!validator.matches(password, /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i")) {
+  if (password === "") 
+  {
     errors += "invalid password; ";
   }
 
@@ -128,6 +129,7 @@ router.post('/', async (req, res) => {
   // If no errors, insert
   try {
 
+    // Encrypted password
     const passwordHash = await bcrypt.hash(password, hashCost);
 
     // Get a DB connection and execute SQL

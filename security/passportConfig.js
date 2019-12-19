@@ -43,7 +43,6 @@ const getUser = async (username) => {
 
 // The local strategy middleware
 passport.use(new LocalStrategy({
-
   // These values are passsed via HTTP 
   usernameField: 'username',
   passwordField: 'password',
@@ -51,8 +50,8 @@ passport.use(new LocalStrategy({
   try {
     const user = await getUser(username);
     // this example uses plain text but better to use hashed passwords - 
-    // const passwordsMatch = await bcrypt.compare(password, user.Password);
-    if (user.Password === password) {
+    const passwordsMatch = await bcrypt.compare(password, user.Password);
+    if (passwordsMatch) {
       return done(null, user, { message: 'Logged In Successfully' });
     } else {
       return done(null, false, { message: 'Incorrect Username / Password' });
@@ -79,4 +78,3 @@ passport.use(new JWTStrategy({
   }
 ));
 
-// get request credentials https://stackoverflow.com/questions/57639533/how-to-retrieve-web-token-from-cookie-using-express-passport

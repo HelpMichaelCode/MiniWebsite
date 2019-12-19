@@ -17,7 +17,7 @@ app.use(express.static('website'));
 
 // Application settings
 app.use((req, res, next) => {
-    // Globally set Content-Type header for the application
+    // Globally set Content-Type header for the application 
     res.setHeader("Content-Type", "application/json");
    
     next();
