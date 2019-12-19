@@ -88,13 +88,13 @@ router.get('/logout', async (req, res) => {
 
 
 
-// POST - Insert a new user.
-// This async function sends a HTTP post request
+// Register a new user
 router.post('/register', async (req, res) => {
   // Validate - this string, inially empty, will store any errors
   let errors = "";
 
-
+  // Basic validation checks 
+  
   const firstName = req.body.firstName;
   if (firstName === "") {
     errors += "invalid first name; ";

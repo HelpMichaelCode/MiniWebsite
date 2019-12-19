@@ -8,7 +8,7 @@ body {
   @import url("https://fonts.googleapis.com/css?family=Merriweather:400,700");
   
   body {
-    background-color: #1B1B1B;
+    
     font-family: "Open Sans", sans-serif;
 
     font-size: 18px;
@@ -26,7 +26,14 @@ body {
   .price {
     text-align: right;
   }
-  
-
+  /* .container{
+    background-color: grey;
+    index: -1;
+    max-width: 100%;
+    imin
+  }
+  table * {
+    background-color: white;
+  } */
 
   

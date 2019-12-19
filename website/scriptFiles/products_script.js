@@ -246,7 +246,7 @@ function displayProducts(products) {
 
   productTable.innerHTML = '';
 
-  const rows = products.map(product => {
+  let rows = products.map(product => {
   
             let rowProduct = `<tr>
                 <td>${product.ProductId}</td>
@@ -261,14 +261,18 @@ function displayProducts(products) {
         if (userLoggedIn() === true && sessionStorage.role === "Admin") {      
           rowProduct+= `<td><button class="btn btn-xs" data-toggle="modal" data-target="#ProductFormDialog" onclick="updateID(${product.ProductId}, ${product.CategoryId}, '${product.ProductName}', '${product.ProductDescription}', ${product.ProductStock}, ${product.ProductPrice});"><span class="oi oi-pencil"></span></button></td>
                    <td><button class="btn btn-xs" onclick="deleteProduct(${product.ProductId})"><span class="oi oi-trash"></span></button></td>`
+
         }
         
         rowProduct+= '</tr>';
 
        return rowProduct;
   });
-
-  productTable.innerHTML = rows.join('');
+  rows = rows.join('');
+  if(userLoggedIn() === true && sessionStorage.role === "Admin"){
+  rows+= `<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ProductFormDialog" id="AddProductButton">Add Product</button>`
+  }
+  productTable.innerHTML = rows;
 
   // let delButtons = productTable.getElementsByTagName("button");
   
